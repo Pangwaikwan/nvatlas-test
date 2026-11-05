@@ -1,15 +1,20 @@
-# nvatlas-test
-A test website of NV Atlas.
+# NV Atlas Test
 
-## Description
-This is a *test website* being used. in the TT class.
-Created on **5 November, 2026**.
+A test website for NV Atlas, created as part of a TT class exercise.
 
-### 3 level title
+## Overview
+
+This repository currently contains the project README and serves as the initial test for building and publishing the NV Atlas website.
+
+Created on **5 November 2026**.
+
+## Markdown Example
+
+### Third-level Heading
+
 We don't write `Python` programs anymore.
 
-Table:
 | Syntax | Description |
-| ----------- | ----------- |
+| --- | --- |
 | Header | Title |
 | Paragraph | Text |
