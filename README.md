@@ -1,5 +1,5 @@
 # nvatlas-test
-A test website of NV Atlas for TT class.
+A test website of NV Atlas.
 
 ## Description
 This is a *test website* being used. in the TT class.
