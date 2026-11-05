@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore how English abstract nominals are rendered as Chinese verbs in a 500-entry subtitle corpus.">
+  <title>NV Atlas | Nominal to Verb</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#explorer">Skip to corpus explorer</a>
+  <header class="site-header">
+    <a class="brand" href="#overview" aria-label="NV Atlas home">
+      <span class="brand-mark" aria-hidden="true">NV</span>
+      <span><strong>NV Atlas</strong><small>Nominal <span aria-hidden="true">→</span> Verb</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#overview" data-i18n="navOverview">Overview</a>
+      <a href="#explorer" data-i18n="navExplore">Explore</a>
+      <a href="#visualisations" data-i18n="navVisuals">Visualisations</a>
+      <a href="#report" data-i18n="navReport">Report</a>
+      <a href="#codebook" data-i18n="navCodebook">Codebook</a>
+      <a href="#ai-use" data-i18n="navAi">AI use</a>
+    </nav>
+    <div class="language-toggle" role="group" aria-label="Interface language">
+      <button type="button" data-lang="en" class="active" aria-pressed="true">EN</button>
+      <button type="button" data-lang="zh" aria-pressed="false">繁中</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="hero-copy">
+        <p class="eyebrow">Translation Technology in the Age of AI · 2026R1</p>
+        <h1 data-i18n="heroTitle">From English noun to Chinese verb</h1>
+        <p class="hero-lede" data-i18n="heroLede">A searchable 500-pair corpus of abstract English nominals and the Chinese verbs used to translate them in subtitle dialogue.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#explorer" data-i18n="exploreCorpus">Explore the corpus</a>
+          <a class="button secondary" href="#report" data-i18n="readReport">Read the research report</a>
+        </div>
+      </div>
+      <div class="hero-stat" aria-label="Corpus summary">
+        <strong>500</strong>
+        <span data-i18n="sentencePairs">sentence pairs</span>
+        <div class="stat-grid">
+          <div><b>195</b><small data-i18n="nominalTypes">nominal types</small></div>
+          <div><b>67</b><small data-i18n="variedTerms">terms with varied renderings</small></div>
+          <div><b>4</b><small data-i18n="morphCategories">morphological categories</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explorer" id="explorer">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="searchEyebrow">Search & filter</p>
+        <h2 data-i18n="explorerTitle">Trace the verb behind the noun</h2>
+        <p data-i18n="explorerIntro">Search both languages or narrow by morphological category, translation variation, and verification status. The URL records the exact view.</p>
+      </div>
+
+      <form class="controls" id="controls" role="search">
+        <label class="search-field">
+          <span data-i18n="searchLabel">Search sentences and terms</span>
+          <span class="input-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+            <input id="search" name="q" type="search" autocomplete="off" placeholder="Try: attention, 注意, permission…">
+            <kbd>/</kbd>
+          </span>
+        </label>
+        <label><span data-i18n="categoryLabel">Category</span><select id="category" name="category"><option value="" data-i18n="allCategories">All categories</option></select></label>
+        <label><span data-i18n="variationLabel">Rendering</span><select id="variation" name="variation">
+          <option value="" data-i18n="allRendering">All terms</option>
+          <option value="varied" data-i18n="variedOnly">Varied translations only</option>
+          <option value="consistent" data-i18n="consistentOnly">Single translation only</option>
+        </select></label>
+        <label><span data-i18n="checkedLabel">Human checked</span><select id="checked" name="checked">
+          <option value="" data-i18n="allEntries">All entries</option>
+          <option value="yes" data-i18n="yesOnly">Yes only</option>
+          <option value="no" data-i18n="noOnly">No / pending</option>
+        </select></label>
+        <button class="button ghost" type="reset" id="resetFilters" data-i18n="reset">Reset</button>
+      </form>
+      <div class="active-view" aria-live="polite">
+        <span id="resultCount">500 records</span>
+        <span id="activeSearch"></span>
+        <button type="button" id="copyView" class="text-button" data-i18n="copyLink">Copy shareable view</button>
+      </div>
+    </section>
+
+    <section class="section visuals" id="visualisations">
+      <div class="section-heading compact">
+        <p class="eyebrow" data-i18n="visualEyebrow">Linked views</p>
+        <h2 data-i18n="visualTitle">Three ways into the same filtered data</h2>
+        <p data-i18n="visualIntro">Select a category, translation pair, or term to update every view and the table below.</p>
+      </div>
+      <div class="selection-bar" id="selectionBar" hidden>
+        <span data-i18n="selected">Selected:</span>
+        <strong id="selectionLabel"></strong>
+        <button type="button" id="clearSelection" class="text-button" data-i18n="clearSelection">Clear selection</button>
+      </div>
+
+      <article class="chart-panel chart-wide" id="flowPanel">
+        <header>
+          <div><span class="chart-number">01</span><h3 data-i18n="flowTitle">Category to rendering pattern</h3></div>
+          <p data-i18n="flowCaption">How do morphological categories distribute across direct and varied Chinese renderings?</p>
+        </header>
+        <div class="chart-controls">
+          <label><span data-i18n="linkStrength">Show minimum links</span><input id="flowMinimum" type="range" min="1" max="6" value="1"><output id="flowMinimumOut">1</output></label>
+        </div>
+        <div class="viz-frame"><svg id="flowChart" role="img" aria-label="Sankey-style flow diagram from nominal categories to translation consistency"></svg></div>
+        <p class="chart-note" data-i18n="flowNote">Flows run from the four suffix-based categories to terms with one or several Chinese renderings.</p>
+      </article>
+
+      <div class="chart-grid">
+        <article class="chart-panel" id="networkPanel">
+          <header>
+            <div><span class="chart-number">02</span><h3 data-i18n="networkTitle">Nominal-to-verb network</h3></div>
+            <p data-i18n="networkCaption">Which English nominals connect to more than one Chinese verb?</p>
+          </header>
+          <div class="chart-controls two">
+            <label><span data-i18n="topTerms">Top terms</span><input id="networkTop" type="range" min="5" max="30" value="16"><output id="networkTopOut">16</output></label>
+            <label><span data-i18n="minWeight">Minimum link weight</span><input id="networkMinimum" type="range" min="1" max="5" value="1"><output id="networkMinimumOut">1</output></label>
+          </div>
+          <div class="viz-frame tall"><svg id="networkChart" role="img" aria-label="Interactive network graph of English nominals and Chinese verbs"></svg></div>
+          <p class="chart-note" data-i18n="networkNote">Node size shows filtered frequency. Select a node or link to search the matching pairs.</p>
+        </article>
+
+        <article class="chart-panel" id="contextPanel">
+          <header>
+            <div><span class="chart-number">03</span><h3 data-i18n="contextTitle">Bilingual KWIC</h3></div>
+            <p data-i18n="contextCaption">How does the selected nominal appear in context?</p>
+          </header>
+          <div class="kwic-head">
+            <label><span data-i18n="focusTerm">Focus term</span><select id="focusTerm"><option value="" data-i18n="chooseTerm">Choose a term</option></select></label>
+            <span class="kwic-legend"><i></i><span data-i18n="matchLegend">matched words</span></span>
+          </div>
+          <div class="kwic-list" id="kwicList"></div>
+          <p class="chart-note" data-i18n="contextNote">Each row shows the English source and Chinese target. Select a row to search that nominal.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section data-section" id="data">
+      <div class="section-heading compact">
+        <p class="eyebrow" data-i18n="dataEyebrow">Data table</p>
+        <h2 data-i18n="dataTitle">Inspect every pair</h2>
+        <p data-i18n="dataIntro">Sort, search, and review the records behind the visualisations.</p>
+      </div>
+      <div class="table-tools">
+        <label><span data-i18n="sortLabel">Sort</span><select id="sortBy">
+          <option value="id" data-i18n="sortId">Corpus ID</option>
+          <option value="source" data-i18n="sortEnglish">English text</option>
+          <option value="key_term" data-i18n="sortNominal">English nominal</option>
+          <option value="target_term" data-i18n="sortChinese">Chinese verb</option>
+        </select></label>
+        <a id="downloadCsv" class="button secondary small" href="NVAtlas-AI-Agent.csv" download data-i18n="downloadCsv">Download source CSV</a>
+        <a id="downloadFiltered" class="button primary small" href="#" download="nvatlas-filtered.csv" data-i18n="exportFiltered">Export filtered CSV</a>
+      </div>
+      <div class="table-wrap">
+        <table id="dataTable">
+          <thead><tr>
+            <th scope="col" data-i18n="colId">ID</th>
+            <th scope="col" data-i18n="colEnglish">English source</th>
+            <th scope="col" data-i18n="colChinese">Chinese target</th>
+            <th scope="col" data-i18n="colNominal">English nominal</th>
+            <th scope="col" data-i18n="colVerb">Chinese verb</th>
+            <th scope="col" data-i18n="colCategory">Category</th>
+            <th scope="col" data-i18n="colChecked">Checked</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button type="button" id="prevPage" class="button secondary small" data-i18n="previous">Previous</button>
+        <span id="pageLabel">Page 1 of 1</span>
+        <button type="button" id="nextPage" class="button secondary small" data-i18n="next">Next</button>
+      </div>
+    </section>
+
+    <section class="section report-section" id="report">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="reportEyebrow">Learning report</p>
+        <h2 data-i18n="reportTitle">What the noun-to-verb shift reveals</h2>
+        <p data-i18n="reportIntro">This study asks how subtitle translators turn abstract English nominalisations into compact Chinese predicates. It is an exploratory corpus analysis, not a claim about all translation.</p>
+      </div>
+      <div class="report-layout">
+        <aside class="report-toc">
+          <a href="#origin" data-i18n="origin">Origin</a><a href="#background" data-i18n="background">Background</a><a href="#gap" data-i18n="gap">Gap</a><a href="#questions" data-i18n="questions">Questions</a><a href="#method" data-i18n="method">Method</a><a href="#analysis" data-i18n="analysis">Analysis</a><a href="#conclusion" data-i18n="conclusion">Conclusion</a><a href="#reflection" data-i18n="reflection">Reflection</a>
+        </aside>
+        <article class="report-body">
+          <section id="origin"><h3 data-i18n="origin">Origin</h3><p data-i18n="originText">The starting file was a 500-pair subtitle sample that paired each English sentence with a Chinese sentence, an abstract English nominal, and a Chinese verb. Its striking pattern was the shift from a noun-centred English phrase such as “give permission” or “pay attention” to a compact Chinese predicate.</p></section>
+          <section id="background"><h3 data-i18n="background">Background</h3><p data-i18n="backgroundText">English academic and formal registers often prefer nominalisation: an action is packaged as a noun and joined to a light verb. Chinese can make the same event available as a verbal predicate. Subtitle constraints make the difference visible because screen space and reading speed favour compact wording.</p></section>
+          <section id="gap"><h3 data-i18n="gap">Gap</h3><p data-i18n="gapText">Existing bilingual tools help users search sentences, but they often present isolated translations without showing which nominal forms repeatedly become verbs. The supplied CSV also lacks explicit provenance URLs and manual-check marks, so this project treats source traceability and verification status as part of the analysis rather than hiding them.</p></section>
+          <section id="questions"><h3 data-i18n="questions">Questions</h3><ol class="report-list"><li data-i18n="question1">Which morphological categories dominate the sample, and how consistent are their Chinese renderings?</li><li data-i18n="question2">Which nominals have the widest range of verb translations?</li><li data-i18n="question3">Where should a human reviewer start when the source metadata is incomplete?</li></ol></section>
+          <section id="method"><h3 data-i18n="method">Method</h3><p data-i18n="methodText">I preserved the original CSV and generated a JSON derivative. Categories were assigned by an explicit suffix rule: -tion/-sion as action/process, -ment as result/state, -ance/-ence/-ancy/-ency as quality/condition, and all others as the comparison group. A term is “varied” when the filtered data contains more than one Chinese verb for it. Source, category, and human_check fields are exposed in the site. No upstream URLs were supplied, so every human_checked value is honestly marked “no”; checking 50 entries against originals remains required before submission.</p><p class="callout" data-i18n="methodCallout">Important: suffix classification describes form, not meaning. A word such as “attention” can name a state or an action depending on context. The category is a reproducible starting point, not a semantic ground truth.</p><p data-i18n="methodSeed">Sampling method cannot be reconstructed from the supplied file because it contains no extraction script, random seed, rejected-candidate count, or upstream sentence URLs. The report records that limitation.</p></section>
+          <section id="analysis"><h3 data-i18n="analysis">Analysis</h3><p data-i18n="analysisText">The sample is dominated by action/process nominals (317 of 500), followed by quality/condition (84), result/state (70), and other forms (29). This is partly a consequence of the suffix rules and English nominalisation patterns, not evidence that Chinese translators “prefer verbs” in general.</p><p data-i18n="analysisVariation">Variation is concentrated in high-frequency terms. Attention has 45 records and four Chinese renderings; permission has 17 records and five; performance has 11 and five. These are better candidates for close reading than rare terms with a single example.</p><p data-i18n="analysisFinding">The most frequent Chinese verbs in the sample are 注意 (42), 允许 and 保护 (12 each), 解释 and 讨论 (8 each). These counts show repetition across the filtered corpus, but they do not establish a universal translation rule.</p><p data-i18n="analysisCheck">The visualisations all recalculate from the current filters. A category selection changes the totals in Category to rendering pattern, Nominal-to-verb network, Bilingual KWIC, and the data table together.</p></section>
+          <section id="conclusion"><h3 data-i18n="conclusion">Conclusion</h3><p data-i18n="conclusionText">The corpus makes a simple but useful pattern visible: English nominal forms are often rendered by Chinese predicates, and common nominal types account for much of the variation. The site supports checking that claim at record level rather than relying on a summary statistic alone.</p></section>
+          <section id="reflection"><h3 data-i18n="reflection">Reflection</h3><p data-i18n="reflectionText">The hardest part was not drawing charts but deciding what the file could support. Without upstream URLs, a sampling seed, or manual-check marks, the data cannot be presented as fully verified. I would rebuild the corpus collection pipeline first, record every source sentence and retrieval date, and manually check 50 entries before expanding the codebook. AI was useful for structuring and coding the explorer, but it could not replace source verification or decide meaning in context.</p></section>
+        </article>
+      </div>
+    </section>
+
+    <section class="section codebook-section" id="codebook">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="codebookEyebrow">Codebook</p>
+        <h2 data-i18n="codebookTitle">Four transparent starting categories</h2>
+        <p data-i18n="codebookIntro">These categories classify the English nominal's surface form. They are intentionally mechanical so another reviewer can reproduce every assignment.</p>
+      </div>
+      <div id="categoryCards" class="category-grid"></div>
+      <div class="codebook-notes">
+        <div><h3 data-i18n="decisionTitle">Decision rule</h3><p data-i18n="decisionText">Apply the rules from top to bottom. Match only the ending of the supplied English_Nominal. Do not infer the category from the Chinese verb, because doing so would mix form and translation behaviour.</p></div>
+        <div><h3 data-i18n="positiveTitle">Positive example</h3><p><b>decision</b> ends in -sion and is labelled <span data-i18n="actionLabel">Action or process</span>. <b>appointment</b> ends in -ment and is labelled <span data-i18n="resultLabel">Result or state</span>.</p></div>
+        <div><h3 data-i18n="negativeTitle">Negative example</h3><p><b>dance</b> does not match any target suffix and is placed in <span data-i18n="otherLabel">Other nominal form</span>, even though it can describe an action.</p></div>
+        <div><h3 data-i18n="boundaryTitle">Boundary case</h3><p><b>performance</b> ends in -ance, so the mechanical rule assigns it to <span data-i18n="qualityLabel">Quality or condition</span>. Semantically it can also mean an event; the form-based rule keeps the classification stable.</p></div>
+      </div>
+    </section>
+
+    <section class="section ai-section" id="ai-use">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="aiEyebrow">AI Use Declaration</p>
+        <h2 data-i18n="aiTitle">How AI contributed</h2>
+      </div>
+      <div class="ai-grid">
+        <article><h3 data-i18n="aiTools">Tools used</h3><p data-i18n="aiToolsText">OpenAI Codex in the ChatGPT desktop app, used as a coding and analysis agent. The underlying model version was not exposed in the interface.</p></article>
+        <article><h3 data-i18n="aiTasks">What AI did</h3><p data-i18n="aiTasksText">AI profiled the CSV, proposed the suffix codebook, generated the derived JSON, wrote the HTML/CSS/JavaScript, and drafted the report structure. I retained the original source and can inspect the generated rule in scripts/build_data.py.</p></article>
+        <article><h3 data-i18n="humanWork">What was checked</h3><p data-i18n="humanWorkText">The input file's count, unique IDs, field completeness, and target-term containment were checked programmatically. Manual verification against upstream subtitle sources has not yet been completed because those sources and URLs were not supplied.</p></article>
+        <article><h3 data-i18n="aiLimits">What AI could not do</h3><p data-i18n="aiLimitsText">AI could not verify the original subtitle wording, recover an upstream sentence URL, or decide the author's own sampling seed. Those gaps are marked in the interface rather than filled with invented values.</p></article>
+        <article class="wide"><h3 data-i18n="promptTitle">Example prompt</h3><blockquote data-i18n="promptText">“Build a static corpus explorer that satisfies the brief, but do not invent source metadata or claim that entries were manually verified. Surface the missing provenance in the interface and report.”</blockquote></article>
+        <article class="wide"><h3 data-i18n="aiErrorTitle">One thing AI got wrong</h3><p data-i18n="aiErrorText">The first interpretation of “category” could have treated semantic meaning as if it were directly recoverable from the data. A mechanical suffix rule makes the assumption explicit: it can be audited, but it is not semantic truth. The interface and report now say so.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div><strong>NV Atlas</strong> · Translation Technology in the Age of AI</div>
+    <div><span data-i18n="footerData">Data:</span> NVAtlas-AI-Agent.csv <span aria-hidden="true">·</span> <span data-i18n="footerBuilt">Static site, no server or tracking</span></div>
+  </footer>
+  <script src="assets/i18n.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
